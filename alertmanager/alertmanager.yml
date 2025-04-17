@@ -1,0 +1,48 @@
+
+global:
+ resolve_timeout: 5m
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 1m
+  repeat_interval: 30m
+  receiver: default-receiver
+
+  routes:
+    - match:
+        severity: warning
+      receiver: slack-warning
+
+    - match:
+        severity: critical
+      receiver: slack-critical
+
+receivers:
+  - name: default-receiver
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/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'
+        channel: '#monitoring-alerts'
+        send_resolved: true
+        text: |
+          *[{{ .Status | toUpper }}]* {{ .CommonAnnotations.summary }}
+          {{ .CommonAnnotations.description }}
+
+  - name: slack-warning
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/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'
+        channel: '#monitoring-warning-alerts'
+        send_resolved: true
+        text: |
+          *[{{ .Status | toUpper }}]* {{ .CommonAnnotations.summary }}
+          {{ .CommonAnnotations.description }}
+
+  - name: slack-critical
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/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'
+        channel: '#monitoring-alerts'
+        send_resolved: true
+        text: |
+          *[{{ .Status | toUpper }}]* {{ .CommonAnnotations.summary }}
+          {{ .CommonAnnotations.description }}
+

@@ -1,0 +1,24 @@
+groups:
+  - name: Disk-alerts
+    rules:
+     - alert: HighDiskUsage
+       expr: (1 - (node_filesystem_avail_bytes{device="/dev/root", mountpoint="/"} / node_filesystem_size_bytes{device="/dev/root", mountpoint="/"})) * 100 > 80
+       #expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 85
+       for: 1m
+       labels:
+         severity: critical
+       annotations:
+         summary: "Disk usage is high on {{ $labels.instance }} for {{ $labels.device }}"
+         description: "Disk usage is above 85% on device {{ $labels.device }}."
+
+
+     - alert: LowDiskSpace
+       expr: (node_filesystem_avail_bytes{mountpoint="/", device="/dev/root"} / node_filesystem_size_bytes{mountpoint="/", device="/dev/root"}) * 100 < 10
+       #expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 10
+       for: 5m
+       labels:
+         severity: critical
+       annotations:
+         summary: "Low disk space on {{ $labels.instance }} for {{ $labels.device }}"
+         description: "Disk space is below 10% on device {{ $labels.device }}."
+

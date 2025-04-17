@@ -1,0 +1,21 @@
+groups:
+- name: cpu-alerts
+  rules:
+  - alert: HighCPU-Alert-Bank-app-server"
+    expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="Bank-app-vm"}[1m])) * 100) > 90
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: 'High CPU usage on Instance {{ $labels.instance }} Instance'
+      description: "CPU usage on {{ $labels.instance }} is above 90% for more than 2 minutes."
+
+  - alert: HighCPU-Alert
+    expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle", instance="server-b:9100"}[1m])) * 100) > 80
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: 'High CPU usage on Instance {{ $labels.instance }} Instance'
+      description: "CPU usage on {{ $labels.instance }} is above 80% for more than 2 minutes."
+

@@ -1,0 +1,12 @@
+groups:
+  - name: process-alerts
+    rules:
+      - alert: Bank-app-ProcessDown
+        expr: namedprocess_namegroup_num_procs{groupname="java",instance="Bank-app-vm"} < 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Bank-app process is down on {{ $labels.instance }}"
+          description: "No Bank-app process found on {{ $labels.instance }} for over 1 minute."
+
