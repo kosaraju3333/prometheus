@@ -21,7 +21,7 @@ route:
 receivers:
   - name: default-receiver
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/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'
+      - api_url: 'https://hooks.slack.com/URL'
         channel: '#monitoring-alerts'
         send_resolved: true
         text: |
@@ -30,7 +30,7 @@ receivers:
 
   - name: slack-warning
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/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'
+      - api_url: 'https://hooks.slack.com/URL'
         channel: '#monitoring-warning-alerts'
         send_resolved: true
         text: |
@@ -39,7 +39,7 @@ receivers:
 
   - name: slack-critical
     slack_configs:
-      - api_url: 'https://hooks.slack.com/services/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'
+      - api_url: 'https://hooks.slack.com/URL'
         channel: '#monitoring-alerts'
         send_resolved: true
         text: |
