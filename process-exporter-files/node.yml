@@ -1,0 +1,8 @@
+process_names:
+  - name: "node /home/ubun"
+    cmdline:
+    - 'node /home/ubun'
+
+  - name: "nginx"
+    cmdline:
+    - 'nginx'
