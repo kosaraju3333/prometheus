@@ -2,11 +2,42 @@ groups:
   - name: process-alerts
     rules:
       - alert: Bank-app-ProcessDown
-        expr: namedprocess_namegroup_num_procs{groupname="java",instance="Bank-app-vm"} < 1
+        expr: namedprocess_namegroup_num_procs{groupname="java",instance="bank-app-vm"} < 1
         for: 1m
         labels:
           severity: critical
         annotations:
           summary: "Bank-app process is down on {{ $labels.instance }}"
           description: "No Bank-app process found on {{ $labels.instance }} for over 1 minute."
+
+
+      - alert: Portal-app-ProcessDown
+        expr: namedprocess_namegroup_num_procs{groupname="node /home/ubun",instance="portal-app-VM"} < 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Portal-app process is down on {{ $labels.instance }}"
+          description: "No Portal-app process found on {{ $labels.instance }} for over 1 minute."
+
+
+
+      - alert: Postgres-DB-ProcessDown
+        expr: namedprocess_namegroup_num_procs{groupname="postgres"} < 7
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Postgres-DB process is down on {{ $labels.instance }}"
+          description: "No Postgres-DB process found on {{ $labels.instance }} for over 1 minute."
+ 
+
+      - alert: Java-Process-Missing
+        expr: absent(namedprocess_namegroup_num_procs{groupname="java"})
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Java Process is Missing {{ $labels.instance }}"
+          description: "No Java Process found on {{ $labels.instance }} for over 1 minute."
 
