@@ -51,24 +51,16 @@ This could be your POD/Deployment and etc..
 apiVersion: v1
 kind: Pod
 metadata:
-  name: sample-app
-  namespace: default
+  name: nginx-app
+  namespace: nginx-app
   labels:
-    app: sample-app
+    app: nginx-app
 spec:
   containers:
-    - name: sample-app
+    - name: nginx-app
       image: nginx   # you can replace this with your app image
       ports:
-        - containerPort: 8080
-      readinessProbe:
-        httpGet:
-          path: /metrics
-          port: 8080
-      livenessProbe:
-        httpGet:
-          path: /metrics
-          port: 8080
+        - containerPort: 4040
 ---
 
 Service to expose internally
@@ -76,31 +68,32 @@ Service to expose internally
 apiVersion: v1
 kind: Service
 metadata:
-  name: sample-app
-  namespace: default
+  name: nginx-app
+  namespace: nginx-app
   labels:
-    app: sample-app
+    app: nginx-app
 spec:
   selector:
-    app: sample-app
+    app: nginx-app
   ports:
     - name: metrics
-      port: 8080
-      targetPort: 8080
+      port: 4040
+      targetPort: 4040
+
 ---
 ServiceMonitor On top of Service to add app as target in prometheus 
 
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: sample-app-servicemonitor
-  namespace: default
+  name: nginx-app-servicemonitor
+  namespace: nginx-app
   labels:
-    release: prom     # IMPORTANT — must match your Prometheus Helm release
+    release: prom-stack     # IMPORTANT — must match your Prometheus Helm release
 spec:
   selector:
     matchLabels:
-      app: sample-app
+      app: nginx-app
   endpoints:
     - port: metrics
       path: /metrics
