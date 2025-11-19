@@ -27,7 +27,7 @@ Prometheus UI:
 <img width="1916" height="855" alt="Screenshot 2025-11-19 at 6 55 48 PM" src="https://github.com/user-attachments/assets/09898b77-a8a4-4c84-896e-2bc1875a0308" />
 
 
-basic query: 
+Ran basic query to show that data is fetched from EKS cluster: 
 
 <img width="1912" height="534" alt="Screenshot 2025-11-19 at 7 06 53 PM" src="https://github.com/user-attachments/assets/8b83d505-d422-4fe7-b5c3-3acde664d68b" />
 
@@ -164,7 +164,7 @@ spec:
 ```
 
 - Added or scraped new target to prometheus 
-- Its only test purpose only, I dod not  exposed any metric to /metric that why its fails .
+- Its only test purpose, I did not exposed any metric to /metric that why its fails .
   
 <img width="1918" height="1039" alt="Screenshot 2025-11-19 at 7 21 18 PM" src="https://github.com/user-attachments/assets/0057016c-56b7-4d75-933f-2922661a77fd" />
 
